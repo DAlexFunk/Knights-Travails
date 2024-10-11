@@ -31,7 +31,7 @@ function pathFrom(start, end, graph = gameBoard) {
     Q.push({ from: start, self: node, cost: 1 });
   }
 
-  // Keep going until queue is epmty or path found
+  // Keep going until queue is empty or path found
   while (Q.length && !found[end[0]][end[1]]) {
     // Dequeue the next element
     const visited = Q.shift();
@@ -42,7 +42,7 @@ function pathFrom(start, end, graph = gameBoard) {
       paths[visited.self[0]][visited.self[1]].push(visited.from);
       paths[visited.self[0]][visited.self[1]].push(visited.cost);
 
-      // Queue paths if not already found
+      // Enqueue next paths if not already found
       for (let next of graph[visited.self[0]][visited.self[1]]) {
         if (!found[next[0]][next[1]])
           Q.push({ from: visited.self, self: next, cost: visited.cost + 1 });
