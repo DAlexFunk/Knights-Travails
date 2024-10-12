@@ -1,6 +1,10 @@
 import { gameBoard } from "./gameboard.mjs";
 
 function pathFrom(start, end, graph = gameBoard) {
+  if (!graph[start[0]] || !graph[end[0]] || !graph[start[0]][start[1]] || !graph[end[0]][end[1]]) {
+    throw new Error("Cells out of range");
+  }
+
   // Create Queue needed for breadth first search
   const Q = [];
 
@@ -36,7 +40,7 @@ function pathFrom(start, end, graph = gameBoard) {
     // Dequeue the next element
     const visited = Q.shift();
 
-    if (!found[visited.self]) {
+    if (!found[visited.self[0]][visited.self[1]]) {
       // Update arrays with pertinant info
       found[visited.self[0]][visited.self[1]] = true;
       paths[visited.self[0]][visited.self[1]].push(visited.from);
@@ -59,10 +63,10 @@ function pathFrom(start, end, graph = gameBoard) {
   }
   path.unshift(currentPos);
 
-  console.log(`You made it in ${path.length - 1} moves! Here is your path:`)
+  console.log(`You made it in ${path.length - 1} moves! Here is your path:`);
   for (let square of path) {
     console.log(square);
   }
 }
 
-pathFrom([3,3], [4, 3]);
+pathFrom([0,0], [1, 1]);
